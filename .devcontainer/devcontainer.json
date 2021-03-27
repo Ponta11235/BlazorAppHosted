@@ -21,11 +21,14 @@
 
 	// Add the IDs of extensions you want installed when the container is created.
 	"extensions": [
-		"ms-dotnettools.csharp"
+		"ms-dotnettools.csharp",
+		"mhutchie.git-graph",
+		"eamodio.gitlens",
+		"ms-vscode.js-debug-nightly"
 	],
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	// "forwardPorts": [5000, 5001],
+	"forwardPorts": [5000, 5001],
 
 	// [Optional] To reuse of your local HTTPS dev cert:
 	//
