@@ -24,7 +24,8 @@
 		"ms-dotnettools.csharp",
 		"mhutchie.git-graph",
 		"eamodio.gitlens",
-		"ms-vscode.js-debug-nightly"
+		"ms-vscode.js-debug-nightly",
+		"visualstudioexptteam.vscodeintellicode"
 	],
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.

@@ -30,6 +30,28 @@ dotnet run
 
 # Install Nuget Package
 ```
-dotnet add package Microsoft.EntityFrameworkCore.Tools
+cd Server
+dotnet add package Microsoft.EntityFrameworkCore
+dotnet add package Microsoft.EntityFrameworkCore.Design
 dotnet add package Microsoft.EntityFrameworkCore.Sqlite
+dotnet add package Microsoft.EntityFrameworkCore.Tools
+```
+# Install Tool for Migration
+```
+cd LibraryManagement
+dotnet new tool-manifest
+dotnet tool install dotnet-ef
+```
+
+# Migration
+```
+dotnet ef migrations add InitialCreate
+dotnet ef database update
+```
+
+# SetUp Initial Data
+```
+INSERT INTO BOOKS VALUES(1,"はじめてのBlazor WebAssembly","山田　太郎",1980,1);
+INSERT INTO BOOKS VALUES(2,"動かして覚えるEntityFramework","山田　次郎",1560,1);
+INSERT INTO BOOKS VALUES(3,"Perfect WebForms","山田　太郎",3680,0);
 ```

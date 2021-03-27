@@ -1,0 +1,88 @@
+@page "/booklist"
+@using BlazorAppHosted.Shared.Models
+@inject HttpClient Http
+
+<label>Name</label>
+<input type="text" @bind="name" />
+<label>Author</label>
+<input type="text" @bind="author" />
+<label>Price</label>
+<input type="number" @bind="price" />
+<label>Available</label>
+<input type="checkbox" @bind="available" />
+<button @onclick="Add">Add</button>
+
+@if (books == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Author</th>
+                <th>Price</th>
+                <th>Available</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var book in books)
+            {
+               <tr>
+                   <td>@book.Id</td>
+                   <td>@book.Name</td>
+                   <td>@book.Author</td>
+                   <td>@book.Price</td>
+                   <td>@book.Available</td>
+                   <td><button @onclick="() => Update(book.Id)">Update</button></td>
+                   <td><button @onclick="() => Delete(book.Id)">Delete</button></td>
+               </tr> 
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private Book[] books;
+
+    private string name;
+    private string author;
+    private int price;
+    private bool available;
+
+    protected override async Task OnInitializedAsync()
+    {
+        books = await Http.GetFromJsonAsync<Book[]>("api/Books");
+    }
+
+    private async Task Add()
+    {
+        var book = new Book() { Name = name, Author = author, Price = price, Available = available};
+        await Http.PostAsJsonAsync<Book>("api/Books", book);
+        name = "";
+        author = "";
+        price = 0;
+        available = false;
+        books = await Http.GetFromJsonAsync<Book[]>("api/Books");
+    }
+
+    private async Task Delete(long Id)
+    {
+        await Http.DeleteAsync($"api/Books/{Id}");
+        books = await Http.GetFromJsonAsync<Book[]>("api/Books");
+    }
+
+    private async Task Update(long Id)
+    {
+        var book = new Book() {Id = Id, Name = name, Author = author, Price = price, Available = available};
+        await Http.PutAsJsonAsync<Book>("api/Books", book);
+        name = "";
+        author = "";
+        price = 0;
+        available = false;
+        books = await Http.GetFromJsonAsync<Book[]>("api/Books");
+    }
+}
